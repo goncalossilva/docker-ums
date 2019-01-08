@@ -3,7 +3,7 @@ MAINTAINER Gonçalo Silva <goncalossilva@gmail.com>
 
 # install packages per https://github.com/UniversalMediaServer/UniversalMediaServer/wiki/Linux-install-instructions
 # libfreetype6 is necessary to make tsMuxeR work
-# removing the EUID check is necessary to make vlc work
+# removing the EUID check is necessary to make vlc work under root
 RUN (mkdir -p /usr/share/man/man1 &&\
 	dpkg --add-architecture i386 &&\
 	apt-get update &&\
