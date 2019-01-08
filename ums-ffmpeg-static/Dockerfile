@@ -7,7 +7,7 @@ MAINTAINER Gonçalo Silva <goncalossilva@gmail.com>
 RUN (mkdir -p /usr/share/man/man1 &&\
 	dpkg --add-architecture i386 &&\
 	apt-get update &&\
-  DEBIAN_FRONTEND=noninteractive apt-get install -y wget xz-utils openjdk-8-jre mediainfo ffmpeg mencoder dcraw flac mplayer vlc-nox lib32z1 lib32ncurses5 libbz2-1.0:i386 libstdc++6:i386 libfreetype6:i386 p7zip &&\
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends wget xz-utils openjdk-8-jre mediainfo mencoder dcraw flac mplayer vlc-nox lib32z1 lib32ncurses5 libbz2-1.0:i386 libstdc++6:i386 libfreetype6:i386 p7zip &&\
   sed -i 's/geteuid/getppid/' `which vlc` &&\
   rm -rf /var/lib/apt/lists/* /usr/share/man/*)
 
@@ -21,8 +21,13 @@ RUN (cd /opt &&\
   mv ums-${UMS_VERSION} ums &&\
   mkdir /opt/ums/database /opt/ums/data)
 
-# remove ffmpeg so that the system one is used
-RUN (rm /opt/ums/linux/ffmpeg*)
+# update ffmpeg to the latest version
+RUN (cd /opt/ums/linux &&\
+  wget -qO- "https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz" | tar Jx --wildcards */ffmpeg &&\
+  mv */ffmpeg ffmpeg64 &&\
+  wget -qO- "https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-i686-static.tar.xz" | tar Jx --wildcards */ffmpeg &&\
+  mv */ffmpeg ffmpeg &&\
+  rmdir ffmpeg-*)
 
 WORKDIR /opt/ums
 EXPOSE 1900/udp 2869 5001 9001
