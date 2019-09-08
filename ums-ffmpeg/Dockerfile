@@ -7,7 +7,8 @@ MAINTAINER Gonçalo Silva <goncalossilva@gmail.com>
 RUN (mkdir -p /usr/share/man/man1 &&\
 	dpkg --add-architecture i386 &&\
 	apt-get update &&\
-  DEBIAN_FRONTEND=noninteractive apt-get install -y wget xz-utils openjdk-8-jre mediainfo ffmpeg mencoder dcraw flac mplayer vlc-nox lib32z1 lib32ncurses5 libbz2-1.0:i386 libstdc++6:i386 libfreetype6:i386 p7zip &&\
+  DEBIAN_FRONTEND=noninteractive apt-get install -y ffmpeg &&\
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends openjdk-8-jre wget xz-utils mediainfo mencoder dcraw flac mplayer vlc-nox lib32z1 lib32ncurses5 libbz2-1.0:i386 libstdc++6:i386 libfreetype6:i386 p7zip &&\
   sed -i 's/geteuid/getppid/' `which vlc` &&\
   rm -rf /var/lib/apt/lists/* /usr/share/man/*)
 
@@ -19,6 +20,7 @@ RUN (cd /opt &&\
   UMS_VERSION=${UMS_VERSION:=`wget -qO- https://api.github.com/repos/UniversalMediaServer/UniversalMediaServer/releases/latest | python -c "import sys, json; print json.load(sys.stdin)['name']"`} &&\
   wget -qO- "https://github.com/UniversalMediaServer/UniversalMediaServer/releases/download/${UMS_VERSION}/UMS-${UMS_VERSION}.tgz" | tar zx &&\
   mv ums-${UMS_VERSION} ums &&\
+  rm -rf ums/linux/jre-*/ &&\
   mkdir /opt/ums/database /opt/ums/data)
 
 # remove ffmpeg so that the system one is used
