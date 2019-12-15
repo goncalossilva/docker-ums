@@ -16,7 +16,7 @@ function build_push {
 if [[ ! -z "$1" ]]; then
     UMS_VERSION="$1"
 else
-    UMS_VERSION=`wget -qO- https://api.github.com/repos/UniversalMediaServer/UniversalMediaServer/releases/latest | python -c "import sys, json; print json.load(sys.stdin)['name']"`
+    UMS_VERSION=`wget -qO- https://api.github.com/repos/UniversalMediaServer/UniversalMediaServer/releases/latest | python -c "import sys, json; print(json.load(sys.stdin)['name'])"`
 fi
 read -p "Build and push UMS $UMS_VERSION [y/N]: " -r
 echo
