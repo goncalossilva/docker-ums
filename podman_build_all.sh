@@ -22,11 +22,11 @@ echo
 
 build_push "$UMS_VERSION" "ums" "$UMS_VERSION" "latest" &
 ums_pid=$!
-build_push "$UMS_VERSION" "ums-ffmpeg" "$UMS_VERSION-ffmpeg" &
-ffmpeg_pid=$!
-build_push "$UMS_VERSION" "ums-ffmpeg-static" "$UMS_VERSION-ffmpeg-static" &
-ffmpeg_static_pid=$!
+#build_push "$UMS_VERSION" "ums-ffmpeg" "$UMS_VERSION-ffmpeg" &
+#ffmpeg_pid=$!
+#build_push "$UMS_VERSION" "ums-ffmpeg-static" "$UMS_VERSION-ffmpeg-static" &
+#ffmpeg_static_pid=$!
 
 wait $ums_pid
-wait $ffmpeg_pid
-wait $ffmpeg_static_pid
+#wait $ffmpeg_pid
+#wait $ffmpeg_static_pid

@@ -14,10 +14,11 @@ RUN (mkdir -p /usr/share/man/man1 &&\
 ENV UMS_PROFILE /opt/ums/UMS.conf
 
 # get latest release number and use that to install UMS
+# TODO: instead of hard-coding x86_64, this should be a multi-arch build
 ARG UMS_VERSION
 RUN (cd /opt &&\
   UMS_VERSION=${UMS_VERSION:=`wget -qO- https://api.github.com/repos/UniversalMediaServer/UniversalMediaServer/releases/latest | python -c "import sys, json; print json.load(sys.stdin)['name']"`} &&\
-  wget -qO- "https://github.com/UniversalMediaServer/UniversalMediaServer/releases/download/${UMS_VERSION}/UMS-${UMS_VERSION}.tgz" | tar zx &&\
+  wget -qO- "https://github.com/UniversalMediaServer/UniversalMediaServer/releases/download/${UMS_VERSION}/UMS-${UMS_VERSION}-x86_64.tgz" | tar zx &&\
   mv ums-${UMS_VERSION} ums &&\
   rm -rf ums/linux/jre-*/ &&\
   mkdir /opt/ums/database /opt/ums/data)
