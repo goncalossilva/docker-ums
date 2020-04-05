@@ -13,11 +13,9 @@ function build_push {
     podman rmi "goncalossilva/ums:$3"
 }
 
-if [[ ! -z "$1" ]]; then
-    UMS_VERSION="$1"
-else
-    UMS_VERSION=`wget -qO- https://api.github.com/repos/UniversalMediaServer/UniversalMediaServer/releases/latest | python -c "import sys, json; print(json.load(sys.stdin)['name'])"`
-fi
+UMS_VERSION="${1:-`echo $UMS_VERSION`}"
+UMS_VERSION="${UMS_VERSION:-`wget -qO- https://api.github.com/repos/UniversalMediaServer/UniversalMediaServer/releases/latest | python -c "import sys, json; print(json.load(sys.stdin)['name'])"`}"
+
 read -p "Build and push UMS $UMS_VERSION [y/N]: " -r
 echo
 [[ $REPLY =~ ^[Yy]$ ]] || exit -1
